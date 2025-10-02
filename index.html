@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>User Database</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background: #f4f4f4;
+        }
+
+        button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>User Database Viewer</h1>
+    <button onclick="getUsers()">Load Users</button>
+    <table id="usersTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Location</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        async function getUsers() {
+            const res = await fetch("http://localhost:3300/users");
+            const users = await res.json();
+            const tbody = document.querySelector("#usersTable tbody");
+            tbody.innerHTML = ""; // clear table
+            users.forEach(user => {
+                const row = `<tr>
+          <td>${user.id}</td>
+          <td>${user.firstname}</td>
+          <td>${user.lastname}</td>
+          <td>${user.location}</td>
+        </tr>`;
+                tbody.innerHTML += row;
+            });
+        }
+    </script>
+</body>
+
+</html>

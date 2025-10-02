@@ -1,10 +1,11 @@
 const client = require('./connection.js')
 const express = require('express');
 const app = express();
+const cors = require('cors');   
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
-
+app.use(cors());   
 
 app.listen(3300, ()=>{
     console.log("Sever is now listening at port 3300");
@@ -64,7 +65,7 @@ app.put('/users/:id', (req, res)=> {
     })
 
 })
-
+// delete user route
 app.delete('/users/:id', (req, res)=> {
     let insertQuery = `delete from users where id=${req.params.id}`
 
