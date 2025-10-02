@@ -22,4 +22,13 @@ app.get('/users', (req, res)=>{
 
 })
 
+app.get('/users/:id', (req, res)=>{
+    client.query(`Select * from users where id=${req.params.id}`, (err, result)=>{
+        if(!err){
+            res.send(result.rows);
+        }
+    });
+
+})
+
 
