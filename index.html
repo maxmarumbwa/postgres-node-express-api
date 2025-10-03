@@ -26,16 +26,11 @@
         th {
             background: #f4f4f4;
         }
-
-        button {
-            margin-top: 10px;
-        }
     </style>
 </head>
 
 <body>
     <h1>User Database Viewer</h1>
-    <button onclick="getUsers()">Load Users</button>
     <table id="usersTable">
         <thead>
             <tr>
@@ -50,20 +45,27 @@
 
     <script>
         async function getUsers() {
-            const res = await fetch("http://localhost:3300/users");
-            const users = await res.json();
-            const tbody = document.querySelector("#usersTable tbody");
-            tbody.innerHTML = ""; // clear table
-            users.forEach(user => {
-                const row = `<tr>
-          <td>${user.id}</td>
-          <td>${user.firstname}</td>
-          <td>${user.lastname}</td>
-          <td>${user.location}</td>
-        </tr>`;
-                tbody.innerHTML += row;
-            });
+            try {
+                const res = await fetch("http://localhost:3300/users");
+                const users = await res.json();
+                const tbody = document.querySelector("#usersTable tbody");
+                tbody.innerHTML = ""; // clear table
+                users.forEach(user => {
+                    const row = `<tr>
+                        <td>${user.id}</td>
+                        <td>${user.firstname}</td>
+                        <td>${user.lastname}</td>
+                        <td>${user.location}</td>
+                    </tr>`;
+                    tbody.innerHTML += row;
+                });
+            } catch (err) {
+                console.error("Error fetching users:", err);
+            }
         }
+
+        // Load users automatically when the page loads
+        window.addEventListener("DOMContentLoaded", getUsers);
     </script>
 </body>
 
